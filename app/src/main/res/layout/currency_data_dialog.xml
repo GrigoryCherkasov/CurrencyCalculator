@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:id="@+id/currencyName"
+        style="@style/DialogText"
+        android:hint="@string/currency_name"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/currencyRate"
+        style="@style/DialogText"
+        android:autofillHints=""
+        android:digits="0123456789.,"
+        android:hint="@string/currency_rate"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/currencyCount"
+        style="@style/DialogText"
+        android:autofillHints=""
+        android:hint="@string/d1"
+        android:inputType="number" />
+
+</LinearLayout>

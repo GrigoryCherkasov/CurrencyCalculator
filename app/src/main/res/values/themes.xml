@@ -1,0 +1,94 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="RegularCell">
+        <item name="android:background">@drawable/regular_cell</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CalculatorWidget" parent="RegularCell">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+
+    </style>
+
+    <style name="Calculator" parent="RegularCell">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="android:weightSum">5</item>
+    </style>
+
+    <style name="Display" parent="RegularCell">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">false</item>
+    </style>
+
+    <style name="DisplayExpression" parent="Display">
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+    <style name="Currency" parent="RegularCell">
+        <item name="android:layout_width">55dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Value" parent="RegularCell">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Expression" parent="Value">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Row" parent="RegularCell">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:weightSum">4</item>
+        <item name="android:baselineAligned">false</item>
+    </style>
+
+    <style name="Button" parent="RegularCell">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="ClearButton" parent="Button">
+        <item name="android:background">@drawable/red_cell</item>
+    </style>
+
+    <style name="DialogText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="CurrencyItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+</resources>
