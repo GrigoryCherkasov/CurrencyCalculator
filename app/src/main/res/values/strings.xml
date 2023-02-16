@@ -5,28 +5,7 @@
     <string name="widget_small">Small</string>
 
     <string name="set" translatable="false">\u2261</string>
-    <string name="shift" translatable="false">\u21F5</string>
-    <!--\u21F5 \u21BA-->
-    <string name="bs" translatable="false">\u232B</string>
-    <!--2B05-->
-    <string name="c" translatable="false">C</string>
-    <string name="div" translatable="false">/</string>
-    <string name="mul" translatable="false">*</string>
-    <string name="minus" translatable="false">\u2013</string>
-    <string name="plus" translatable="false">+</string>
-    <string name="eval" translatable="false">=</string>
-
-    <string name="d0" translatable="false">0</string>
     <string name="d1" translatable="false">1</string>
-    <string name="d2" translatable="false">2</string>
-    <string name="d3" translatable="false">3</string>
-    <string name="d4" translatable="false">4</string>
-    <string name="d5" translatable="false">5</string>
-    <string name="d6" translatable="false">6</string>
-    <string name="d7" translatable="false">7</string>
-    <string name="d8" translatable="false">8</string>
-    <string name="d9" translatable="false">9</string>
-    <string name="ds" translatable="false">.</string>
 
     <string name="currency">Currency</string>
     <string name="currency_name">Name</string>

@@ -47,92 +47,73 @@
                 android:text="@string/set"/>
             <TextView
                 android:id="@+id/shift"
-                style="@style/Button"
-                android:text="@string/shift"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/bs"
-                style="@style/Button"
-                android:text="@string/bs"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/c"
-                style="@style/ClearButton"
-                android:text="@string/c"/>
+                style="@style/ClearButton"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/div"
-                style="@style/Button"
-                android:text="@string/div"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d1"
-                style="@style/Button"
-                android:text="@string/d1"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d2"
-                style="@style/Button"
-                android:text="@string/d2"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d3"
-                style="@style/Button"
-                android:text="@string/d3"/>
+                style="@style/Button"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/mul"
-                style="@style/Button"
-                android:text="@string/mul"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d4"
-                style="@style/Button"
-                android:text="@string/d4"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d5"
-                style="@style/Button"
-                android:text="@string/d5"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d6"
-                style="@style/Button"
-                android:text="@string/d6"/>
+                style="@style/Button"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/minus"
-                style="@style/Button"
-                android:text="@string/minus"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d7"
-                style="@style/Button"
-                android:text="@string/d7"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d8"
-                style="@style/Button"
-                android:text="@string/d8"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d9"
-                style="@style/Button"
-                android:text="@string/d9"/>
+                style="@style/Button"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/plus"
-                style="@style/Button"
-                android:text="@string/plus"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/d0"
-                style="@style/Button"
-                android:text="@string/d0"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/ds"
-                style="@style/Button"
-                android:text="@string/ds"/>
+                style="@style/Button"/>
             <TextView
                 android:id="@+id/eval"
-                style="@style/Button"
-                android:text="@string/eval"/>
+                style="@style/Button"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

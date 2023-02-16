@@ -22,13 +22,13 @@ import ws.grigory.currencycalculator.settings.SettingsActivity;
 public class CCWidget extends AppWidgetProvider {
     public static final char ZERO_CHAR = '0';
     public static final char PLUS = '+';
-    public static final char MINUS = '-';
-    public static final char MUL = '*';
-    public static final char DIV = '/';
+    public static final char MINUS = '\u2013';
+    public static final char MUL = '\u00D7';
+    public static final char DIV = '\u00F7';
     public static final char EVAL = '=';
-    public static final char C = 'c';
-    public static final char BS = 'b';
-    public static final char SHIFT = 's';
+    public static final char C = 'C';
+    public static final char BS = '\u232B';
+    public static final char SHIFT = '\u21F5';
     public static final char DOT = '.';
     public static final char COMMA = ',';
     private static final String BUTTON_CODE = "BUTTON_CODE";
@@ -136,7 +136,7 @@ public class CCWidget extends AppWidgetProvider {
         }
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, code, intent, flag);
-
+        widget.setTextViewText(viewId, Character.toString(code));
         widget.setOnClickPendingIntent(viewId, pendingIntent);
     }
 
