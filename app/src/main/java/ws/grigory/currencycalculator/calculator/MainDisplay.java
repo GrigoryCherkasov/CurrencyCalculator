@@ -5,6 +5,7 @@ import static ws.grigory.currencycalculator.CCWidgetLarge.DF;
 import static ws.grigory.currencycalculator.CCWidgetLarge.DS;
 import static ws.grigory.currencycalculator.CCWidgetLarge.EVAL;
 import static ws.grigory.currencycalculator.CCWidgetLarge.ZERO_CHAR;
+import static ws.grigory.currencycalculator.WidgetParameters.checkInfinity;
 
 import java.text.ParseException;
 
@@ -62,8 +63,13 @@ public class MainDisplay extends Display {
 
     public void writeDisplayValueToCurrency() {
         try {
-            getMainDisplayCurrency().value = Objects.requireNonNull(
-                    DF.parse(display.toString())).floatValue();
+            getMainDisplayCurrency().value = checkInfinity(Objects.requireNonNull(
+                    DF.parse(display.toString())).floatValue());
+
+            if(getMainDisplayCurrency().isInfinity()){
+                writeCurrencyValueToDisplay();
+            }
+
         } catch (ParseException ignored) {
         }
     }

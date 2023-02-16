@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class WidgetParameters {
+    public static final int MIN_VALUE = -21474836;
+    public static final int MAX_VALUE = 21474836;
     public static final String CCWIDGET_KEY = "CCWIDGET_KEY";
     private final String MAIN_CURRENCY_NAME = "MAIN_CURRENCY_NAME";
     private final String CURRENCY1_NAME = "CURRENCY1_NAME";
@@ -146,5 +148,14 @@ public class WidgetParameters {
             return DF.format(number);
         }
     }
+    public static float checkInfinity(float value) {
+        float middleValue = value;
 
+        if (value > MAX_VALUE) {
+            middleValue = Float.POSITIVE_INFINITY;
+        } else if (value < MIN_VALUE) {
+            middleValue = Float.NEGATIVE_INFINITY;
+        }
+        return middleValue;
+    }
 }

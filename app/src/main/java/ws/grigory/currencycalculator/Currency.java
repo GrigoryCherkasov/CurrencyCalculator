@@ -1,5 +1,7 @@
 package ws.grigory.currencycalculator;
 
+import static ws.grigory.currencycalculator.WidgetParameters.checkInfinity;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -22,30 +24,30 @@ public class Currency implements Parcelable, Cloneable {
     }
 
     public float getBaseValue() {
-        return (value / count) * rate;
+        return checkInfinity((value / count) * rate);
     }
 
     public void calculateValue(float baseValue) {
-        value = (baseValue / rate) * count;
+        this.value = checkInfinity((baseValue / rate) * count);
     }
 
     public void plus(float value) {
-        this.value = value + this.value;
+        this.value = checkInfinity(value + this.value);
     }
 
     public void minus(float value) {
-        this.value = value - this.value;
+        this.value = checkInfinity(value - this.value);
     }
 
     public void mul(float value) {
-        this.value = value * this.value;
+        this.value = checkInfinity(value * this.value);
     }
 
     public void div(float value) {
         if (this.value == 0) {
             this.value = value < 0 ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
         } else {
-            this.value = value / this.value;
+            this.value = checkInfinity(value / this.value);
         }
     }
 
