@@ -30,9 +30,10 @@ public class MainDisplay extends Display {
             clearDisplay();
         }
 
+        int displayLength = display.length();
         if (BS == c) {
-            if (display.length() > 1) {
-                display.delete(display.length() - 1, display.length());
+            if (displayLength > 1) {
+                display.delete(displayLength - 1, displayLength);
                 isNewValue = false;
             } else {
                 clearDisplay();
@@ -40,12 +41,14 @@ public class MainDisplay extends Display {
                 isNewValue = true;
             }
         } else {
+
             int indexDS = display.indexOf(Character.toString(DS));
 
-            if (indexDS <= 0 || (c != DS && display.length() - indexDS < 3)) {
-                if (display.length() == 1 && display.charAt(0) == ZERO_CHAR) {
+            if (indexDS < 0 || (c != DS && displayLength - indexDS < 3)) {
+                if (displayLength == 1 && display.charAt(0) == ZERO_CHAR && c != DS) {
                     display.delete(0, 1);
-                } else if(display.length() == 0 && c == DS){
+                }
+                if(displayLength == 0 && c == DS){
                     display.append(ZERO_CHAR);
                 }
                 display.append(c);
