@@ -7,4 +7,4 @@
 
     android:updatePeriodMillis="0"
     android:resizeMode="vertical|horizontal"
-    android:initialLayout="@layout/ccwidget" />
+    android:initialLayout="@layout/ccwidget_medium" />

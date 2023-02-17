@@ -20,37 +20,92 @@
         <item name="android:weightSum">5</item>
     </style>
 
-    <style name="Display" parent="RegularCell">
+    <style name="DisplayTemplete" parent="RegularCell">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">40dp</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:baselineAligned">false</item>
     </style>
 
-    <style name="DisplayExpression" parent="Display">
-        <item name="android:layout_height">20dp</item>
+    <style name="DisplayLarge" parent="DisplayTemplete">
+        <item name="android:layout_height">40dp</item>
     </style>
 
-    <style name="Currency" parent="RegularCell">
-        <item name="android:layout_width">55dp</item>
+    <style name="DisplayMedium" parent="DisplayTemplete">
+        <item name="android:layout_height">35dp</item>
+    </style>
+
+    <style name="DisplaySmall" parent="DisplayTemplete">
+        <item name="android:layout_height">30dp</item>
+    </style>
+
+    <style name="DisplayExpressionLarge" parent="DisplayLarge">
+        <item name="android:layout_height">20dp</item>
+    </style>
+    <style name="DisplayExpressionMedium" parent="DisplayMedium">
+        <item name="android:layout_height">17dp</item>
+    </style>
+    <style name="DisplayExpressionSmall" parent="DisplaySmall">
+        <item name="android:layout_height">15dp</item>
+    </style>
+
+    <style name="CurrencyTemplate" parent="RegularCell">
         <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CurrencyLarge" parent="CurrencyTemplate">
+        <item name="android:layout_width">55dp</item>
         <item name="android:paddingStart">5dp</item>
         <item name="android:paddingEnd">5dp</item>
-        <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="Value" parent="RegularCell">
+    <style name="CurrencyMedium" parent="CurrencyTemplate">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="CurrencySmall" parent="CurrencyTemplate">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:paddingStart">3dp</item>
+        <item name="android:paddingEnd">3dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="ValueTemplate" parent="RegularCell">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center_vertical|end</item>
         <item name="android:paddingStart">0dp</item>
+    </style>
+
+    <style name="ValueLarge" parent="ValueTemplate">
         <item name="android:paddingEnd">5dp</item>
         <item name="android:textSize">30sp</item>
     </style>
 
-    <style name="Expression" parent="Value">
+    <style name="ValueMedium" parent="ValueTemplate">
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="ValueSmall" parent="ValueTemplate">
+        <item name="android:paddingEnd">3dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ExpressionLarge" parent="ValueTemplate">
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="ExpressionMedium" parent="ValueTemplate">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="ExpressionSmall" parent="ValueTemplate">
+        <item name="android:textSize">11sp</item>
     </style>
 
     <style name="Row" parent="RegularCell">
@@ -62,16 +117,39 @@
         <item name="android:baselineAligned">false</item>
     </style>
 
-    <style name="Button" parent="RegularCell">
+    <style name="ButtonTemplate" parent="RegularCell">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ButtonLarge" parent="ButtonTemplate">
         <item name="android:textSize">40sp</item>
     </style>
 
-    <style name="ClearButton" parent="Button">
+    <style name="ButtonMedium" parent="ButtonTemplate">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="ButtonSmall" parent="ButtonTemplate">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ClearButtonTemplate" parent="ButtonTemplate">
         <item name="android:background">@drawable/red_cell</item>
+    </style>
+
+    <style name="ClearButtonLarge" parent="ClearButtonTemplate">
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="ClearButtonMedium" parent="ClearButtonTemplate">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="ClearButtonSmall" parent="ClearButtonTemplate">
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="DialogText">

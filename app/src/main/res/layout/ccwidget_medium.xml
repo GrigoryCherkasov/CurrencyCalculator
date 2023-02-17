@@ -4,38 +4,37 @@
     android:layout_margin="5dp"
     style="@style/CalculatorWidget">
     <LinearLayout
-        style="@style/Display">
+        style="@style/DisplayMedium">
         <TextView
             android:id="@+id/currency2"
-            style="@style/Currency" />
+            style="@style/CurrencyMedium" />
         <TextView
             android:id="@+id/value2"
-            style="@style/Value"/>
+            style="@style/ValueMedium"/>
     </LinearLayout>
     <LinearLayout
-        style="@style/Display">
+        style="@style/DisplayMedium">
         <TextView
             android:id="@+id/currency1"
-            style="@style/Currency"/>
+            style="@style/CurrencyMedium"/>
         <TextView
             android:id="@+id/value1"
-            style="@style/Value"
-            android:textSize="30sp"/>
+            style="@style/ValueMedium"/>
     </LinearLayout>
     <LinearLayout
-        style="@style/DisplayExpression">
+        style="@style/DisplayExpressionMedium">
         <TextView
             android:id="@+id/expression"
-            style="@style/Expression"/>
+            style="@style/ExpressionMedium"/>
     </LinearLayout>
     <LinearLayout
-        style="@style/Display">
+        style="@style/DisplayMedium">
         <TextView
             android:id="@+id/currency0"
-            style="@style/Currency"/>
+            style="@style/CurrencyMedium"/>
         <TextView
             android:id="@+id/value0"
-            style="@style/Value"/>
+            style="@style/ValueMedium"/>
     </LinearLayout>
     <LinearLayout
         style="@style/Calculator">
@@ -43,77 +42,77 @@
             style="@style/Row">
             <TextView
                 android:id="@+id/setCurrency"
-                style="@style/Button"
+                style="@style/ButtonMedium"
                 android:text="@string/set"/>
             <TextView
                 android:id="@+id/shift"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/bs"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/c"
-                style="@style/ClearButton"/>
+                style="@style/ClearButtonMedium"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/div"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d1"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d2"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d3"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/mul"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d4"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d5"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d6"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/minus"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d7"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d8"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d9"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/plus"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/d0"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/ds"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
             <TextView
                 android:id="@+id/eval"
-                style="@style/Button"/>
+                style="@style/ButtonMedium"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

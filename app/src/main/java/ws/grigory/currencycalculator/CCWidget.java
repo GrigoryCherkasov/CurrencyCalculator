@@ -75,7 +75,7 @@ public class CCWidget extends AppWidgetProvider {
     }
 
     private void showWidget(Context context, AppWidgetManager appWidgetManager,
-                            Class<? extends CCWidget> widgetClass) {
+                            Class<? extends CCWidget> widgetClass, int layout_id) {
 
         ComponentName componentName = new ComponentName(context, widgetClass);
 
@@ -83,7 +83,7 @@ public class CCWidget extends AppWidgetProvider {
         if (idWidgets.length > 0) {
 
             int classCode = widgetClass.getSimpleName().hashCode();
-            RemoteViews widget = new RemoteViews(componentName.getPackageName(), R.layout.ccwidget);
+            RemoteViews widget = new RemoteViews(componentName.getPackageName(), layout_id);
 
             setOnClick(context, widget);
             setOnClick(context, widget, R.id.shift, SHIFT, classCode);
@@ -151,9 +151,9 @@ public class CCWidget extends AppWidgetProvider {
     }
 
     private void repaintAllWidgets(Context context, AppWidgetManager appWidgetManager) {
-        showWidget(context, appWidgetManager, CCWidgetSmall.class);
-        showWidget(context, appWidgetManager, CCWidgetMedium.class);
-        showWidget(context, appWidgetManager, CCWidgetLarge.class);
+        showWidget(context, appWidgetManager, CCWidgetSmall.class, R.layout.ccwidget_small);
+        showWidget(context, appWidgetManager, CCWidgetMedium.class, R.layout.ccwidget_medium);
+        showWidget(context, appWidgetManager, CCWidgetLarge.class, R.layout.ccwidget_large);
     }
 
     @Override
