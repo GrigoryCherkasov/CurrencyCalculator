@@ -159,7 +159,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        widgetParameters.saveParameters(this, currencies);
+        widgetParameters.saveParameters(this, currencies, 0);
         Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(CURRENCIES, true);
         this.sendBroadcast(intent);

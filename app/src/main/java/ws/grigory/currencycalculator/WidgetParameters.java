@@ -17,17 +17,20 @@ import java.util.Objects;
 public class WidgetParameters {
     public static final int MIN_VALUE = -21474836;
     public static final int MAX_VALUE = 21474836;
-    public static final String CCWIDGET_KEY = "CCWIDGET_KEY";
-    private final String MAIN_CURRENCY_NAME = "MAIN_CURRENCY_NAME";
-    private final String CURRENCY1_NAME = "CURRENCY1_NAME";
-    private final String CURRENCY1_RATE = "CURRENCY1_RATE";
-    private final String CURRENCY1_COUNT = "CURRENCY1_COUNT";
-    private final String CURRENCY2_NAME = "CURRENCY2_NAME";
-    private final String CURRENCY2_RATE = "CURRENCY2_RATE";
-    private final String CURRENCY2_COUNT = "CURRENCY2_COUNT";
+    public static final String CCWIDGET_KEY = "CCWK";
+    private final String MAIN_CURRENCY_NAME = "MCN";
+    private final String CURRENCY1_NAME = "C1N";
+    private final String CURRENCY1_RATE = "C1R";
+    private final String CURRENCY1_COUNT = "C1C";
+    private final String CURRENCY2_NAME = "C2N";
+    private final String CURRENCY2_RATE = "C2R";
+    private final String CURRENCY2_COUNT = "C2C";
+    private final String MAIN_DISPLAY_CURRENCY_INDEX = "MDCI";
     private static WidgetParameters widgetParameters;
 
     public ArrayList<Currency> currencies = null;
+
+    public int mainDisplayCurrencyIndex = 0;
 
     public static synchronized WidgetParameters getWidgetParameters(Context context) {
         if (widgetParameters == null) {
@@ -63,10 +66,11 @@ public class WidgetParameters {
                     currencies.add(new Currency(currencyName, currencyRate, currencyCount));
                 }
             }
+            mainDisplayCurrencyIndex = sharedPreferences.getInt(MAIN_DISPLAY_CURRENCY_INDEX, 0);
         }
     }
 
-    public void saveParameters(Context context, ArrayList<Currency> data) {
+    public void saveParameters(Context context, ArrayList<Currency> data, int mainDisplayCurrencyIndex) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(CCWIDGET_KEY,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -98,6 +102,8 @@ public class WidgetParameters {
                 removeCurrency1(editor);
                 removeCurrency2(editor);
             }
+            this.mainDisplayCurrencyIndex = mainDisplayCurrencyIndex;
+            editor.putInt(MAIN_DISPLAY_CURRENCY_INDEX, this.mainDisplayCurrencyIndex);
         } else {
             editor.remove(MAIN_CURRENCY_NAME);
             removeCurrency1(editor);

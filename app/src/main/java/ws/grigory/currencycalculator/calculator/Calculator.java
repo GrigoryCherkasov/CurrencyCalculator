@@ -22,28 +22,23 @@ public class Calculator {
     private float yRegistry = 0;
     private char operation = EVAL;
     private final Display[] displays = new Display[3];
-    private final MainDisplay mainDisplay;
+    private MainDisplay mainDisplay;
     private boolean isNewValue = true;
     private ArrayList<Currency> currencies;
 
     public Calculator(Context context) {
         loadCurrencies(context);
-        mainDisplay = new MainDisplay(0, this.currencies);
-        displays[0] = mainDisplay;
-        displays[1] = new Display(1, this.currencies);
-        displays[2] = new Display(2, this.currencies);
-
         mainDisplay.processDisplayChar(true, ZERO_CHAR);
     }
 
-    public void setData(char data) {
+    public void setData(char data, Context context) {
         Currency currency = mainDisplay.getMainDisplayCurrency();
         if (C == data) {
             clear();
         } else {
             if (!mainDisplay.getMainDisplayCurrency().isInfinity()) {
                 if (SHIFT == data) {
-                    shift();
+                    shift(context);
                 } else {
                     if (OPERATIONS.indexOf(data) < 0) {
                         isNewValue = mainDisplay.processDisplayChar(isNewValue, data);
@@ -90,11 +85,13 @@ public class Calculator {
         }
     }
 
-    private void shift() {
+    private void shift(Context context) {
         for (Display display : displays) {
             display.shift();
         }
         clearRegistries();
+        WidgetParameters.getWidgetParameters(context).
+                saveParameters(context, currencies, displays[0].currencyIndex);
     }
 
     public void clear() {
@@ -131,12 +128,21 @@ public class Calculator {
 
     @SuppressWarnings("unchecked")
     private void loadCurrencies(Context context) {
-        ArrayList<Currency> data = WidgetParameters.getWidgetParameters(context).currencies;
+        WidgetParameters widgetParameters = WidgetParameters.getWidgetParameters(context);
+        ArrayList<Currency> data = widgetParameters.currencies;
         if(data == null) {
             currencies = new ArrayList<>(3);
             currencies.add(new Currency(EMPTY));
         } else {
             currencies = (ArrayList<Currency>)data.clone();
         }
+        int currencyIndex = widgetParameters.mainDisplayCurrencyIndex;
+        mainDisplay = new MainDisplay(currencyIndex, this.currencies);
+        displays[0] = mainDisplay;
+        currencyIndex = currencyIndex == 0 ? currencies.size() - 1 : --currencyIndex;
+        displays[1] = new Display(currencyIndex, this.currencies);
+        currencyIndex = currencyIndex == 0 ? currencies.size() - 1 : --currencyIndex;
+        displays[2] = new Display(currencyIndex, this.currencies);
+
     }
 }

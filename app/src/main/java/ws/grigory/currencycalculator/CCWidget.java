@@ -68,7 +68,7 @@ public class CCWidget extends AppWidgetProvider {
                     this.getClass().getSimpleName().hashCode() ==
                             intent.getIntExtra(CLASS_CODE, 0)) {
 
-                CALCULATOR.setData(intent.getCharExtra(BUTTON_CODE, EVAL));
+                CALCULATOR.setData(intent.getCharExtra(BUTTON_CODE, EVAL), context);
                 repaintAllWidgets(context, appWidgetManager);
             }
         }
