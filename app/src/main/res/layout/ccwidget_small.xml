@@ -46,73 +46,92 @@
                 android:text="@string/set"/>
             <TextView
                 android:id="@+id/shift"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/shift"/>
             <TextView
                 android:id="@+id/bs"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/bs"/>
             <TextView
                 android:id="@+id/c"
-                style="@style/ClearButtonSmall"/>
+                style="@style/ClearButtonSmall"
+                android:text="@string/c"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/div"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/div"/>
             <TextView
                 android:id="@+id/d1"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d1"/>
             <TextView
                 android:id="@+id/d2"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d2"/>
             <TextView
                 android:id="@+id/d3"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d3"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/mul"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/mul"/>
             <TextView
                 android:id="@+id/d4"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d4"/>
             <TextView
                 android:id="@+id/d5"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d5"/>
             <TextView
                 android:id="@+id/d6"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d6"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/minus"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/minus"/>
             <TextView
                 android:id="@+id/d7"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d7"/>
             <TextView
                 android:id="@+id/d8"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d8"/>
             <TextView
                 android:id="@+id/d9"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d9"/>
         </LinearLayout>
         <LinearLayout
             style="@style/Row">
             <TextView
                 android:id="@+id/plus"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/plus"/>
             <TextView
                 android:id="@+id/d0"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/d0"/>
             <TextView
                 android:id="@+id/ds"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/ds"/>
             <TextView
                 android:id="@+id/eval"
-                style="@style/ButtonSmall"/>
+                style="@style/ButtonSmall"
+                android:text="@string/eval"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -63,20 +63,94 @@ public class CCWidget extends AppWidgetProvider {
 
             if (isNewCurrency) {
                 CALCULATOR.reset(context);
-                repaintAllWidgets(context, appWidgetManager);
+                showAllWidgetsDisplay(context, appWidgetManager);
             } else if (appWidgetManager.getAppWidgetIds(componentName).length > 0 &&
                     this.getClass().getSimpleName().hashCode() ==
                             intent.getIntExtra(CLASS_CODE, 0)) {
 
                 CALCULATOR.setData(intent.getCharExtra(BUTTON_CODE, EVAL), context);
-                repaintAllWidgets(context, appWidgetManager);
+                showAllWidgetsDisplay(context, appWidgetManager);
             }
         }
     }
 
-    private void showWidget(Context context, AppWidgetManager appWidgetManager,
+    private void showWidgetDisplay(Context context, AppWidgetManager appWidgetManager,
                             Class<? extends CCWidget> widgetClass, int layout_id) {
 
+        ComponentName componentName = new ComponentName(context, widgetClass);
+
+        int[] idWidgets = appWidgetManager.getAppWidgetIds(componentName);
+        if (idWidgets.length > 0) {
+
+            RemoteViews widget = new RemoteViews(componentName.getPackageName(), layout_id);
+
+            Display[] displays = CALCULATOR.getDisplays();
+            widget.setTextViewText(R.id.currency2, displays[2].getCurrencyName());
+            widget.setTextViewText(R.id.value2, displays[2].getValue());
+
+            widget.setTextViewText(R.id.currency1, displays[1].getCurrencyName());
+            widget.setTextViewText(R.id.value1, displays[1].getValue());
+
+            widget.setTextViewText(R.id.currency0, displays[0].getCurrencyName());
+            widget.setTextViewText(R.id.value0, displays[0].getValue());
+            widget.setTextViewText(R.id.expression, (
+                    (MainDisplay) displays[0]).expression.toString());
+
+            appWidgetManager.updateAppWidget(idWidgets, widget);
+        }
+    }
+
+    private void showAllWidgetsDisplay(Context context, AppWidgetManager appWidgetManager) {
+        showWidgetDisplay(context, appWidgetManager, CCWidgetSmall.class, R.layout.ccwidget_small);
+        showWidgetDisplay(context, appWidgetManager, CCWidgetMedium.class, R.layout.ccwidget_medium);
+        showWidgetDisplay(context, appWidgetManager, CCWidgetLarge.class, R.layout.ccwidget_large);
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        initAllWidgets(context, AppWidgetManager.getInstance(context));
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        initAllWidgets(context, AppWidgetManager.getInstance(context));
+    }
+
+    private void setOnClick(Context context, RemoteViews widget, @IdRes int viewId, char code,
+                            int classcode) {
+        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(BUTTON_CODE, code);
+        intent.putExtra(CLASS_CODE, classcode);
+
+        int flag;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flag = PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE;
+        } else {
+            flag = PendingIntent.FLAG_UPDATE_CURRENT;
+        }
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, code, intent, flag);
+        widget.setOnClickPendingIntent(viewId, pendingIntent);
+    }
+
+    private void setOnClick(Context context, RemoteViews widget) {
+        CURRENCIES_INTENT.setClass(context, SettingsActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+                CURRENCIES_INTENT,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
+        widget.setOnClickPendingIntent(R.id.setCurrency, pendingIntent);
+    }
+
+    private void initAllWidgets(Context context, AppWidgetManager appWidgetManager) {
+        initWidget(context, appWidgetManager, CCWidgetSmall.class, R.layout.ccwidget_small);
+        initWidget(context, appWidgetManager, CCWidgetMedium.class, R.layout.ccwidget_medium);
+        initWidget(context, appWidgetManager, CCWidgetLarge.class, R.layout.ccwidget_large);
+    }
+
+    private void initWidget(Context context, AppWidgetManager appWidgetManager,
+                                Class<? extends CCWidget> widgetClass, int layout_id) {
         ComponentName componentName = new ComponentName(context, widgetClass);
 
         int[] idWidgets = appWidgetManager.getAppWidgetIds(componentName);
@@ -106,63 +180,7 @@ public class CCWidget extends AppWidgetProvider {
             setOnClick(context, widget, R.id.d8, '8', classCode);
             setOnClick(context, widget, R.id.d9, '9', classCode);
 
-            Display[] displays = CALCULATOR.getDisplays();
-            widget.setTextViewText(R.id.currency2, displays[2].getCurrencyName());
-            widget.setTextViewText(R.id.value2, displays[2].getValue());
-
-            widget.setTextViewText(R.id.currency1, displays[1].getCurrencyName());
-            widget.setTextViewText(R.id.value1, displays[1].getValue());
-
-            widget.setTextViewText(R.id.currency0, displays[0].getCurrencyName());
-            widget.setTextViewText(R.id.value0, displays[0].getValue());
-            widget.setTextViewText(R.id.expression, (
-                    (MainDisplay) displays[0]).expression.toString());
-
             appWidgetManager.updateAppWidget(idWidgets, widget);
         }
-    }
-
-    private void setOnClick(Context context, RemoteViews widget, @IdRes int viewId, char code,
-                            int classcode) {
-        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(BUTTON_CODE, code);
-        intent.putExtra(CLASS_CODE, classcode);
-
-        int flag;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            flag = PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE;
-        } else {
-            flag = PendingIntent.FLAG_UPDATE_CURRENT;
-        }
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, code, intent, flag);
-        widget.setTextViewText(viewId, Character.toString(code));
-        widget.setOnClickPendingIntent(viewId, pendingIntent);
-    }
-
-    private void setOnClick(Context context, RemoteViews widget) {
-        CURRENCIES_INTENT.setClass(context, SettingsActivity.class);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-                CURRENCIES_INTENT,
-                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-
-        widget.setOnClickPendingIntent(R.id.setCurrency, pendingIntent);
-    }
-
-    private void repaintAllWidgets(Context context, AppWidgetManager appWidgetManager) {
-        showWidget(context, appWidgetManager, CCWidgetSmall.class, R.layout.ccwidget_small);
-        showWidget(context, appWidgetManager, CCWidgetMedium.class, R.layout.ccwidget_medium);
-        showWidget(context, appWidgetManager, CCWidgetLarge.class, R.layout.ccwidget_large);
-    }
-
-    @Override
-    public void onEnabled(Context context) {
-        repaintAllWidgets(context, AppWidgetManager.getInstance(context));
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        repaintAllWidgets(context, AppWidgetManager.getInstance(context));
     }
 }

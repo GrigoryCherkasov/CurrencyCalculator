@@ -4,6 +4,8 @@
     <string name="widget_medium">Средний</string>
     <string name="widget_small">Малый</string>
 
+    <string name="ds">,</string>
+
     <string name="currency">Код валюты</string>
     <string name="currency_name">Наименование</string>
     <string name="currency_rate">Курс</string>
