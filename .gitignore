@@ -14,3 +14,6 @@
 .cxx
 local.properties
 build.gradle
+/gradle.properties
+/gradle/wrapper/gradle-wrapper.properties
+/settings.gradle
