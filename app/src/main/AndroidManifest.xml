@@ -50,5 +50,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/ccwidget_small" />
         </receiver>
+
+        <service
+            android:name=".CCWidget$InvalidateJobService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
     </application>
 </manifest>
