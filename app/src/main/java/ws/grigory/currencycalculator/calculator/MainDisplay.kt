@@ -10,35 +10,39 @@ import kotlin.collections.ArrayList
 class MainDisplay(currencyIndex: Int, currencies: ArrayList<Currency>) :
     Display(currencyIndex, currencies) {
     val expression = StringBuilder()
+    val mainDisplayCurrency: Currency
+        get() = currencies[currencyIndex]
 
     fun processDisplayChar(isNewValue: Boolean, c: Char): Boolean {
         if (isNewValue) {
             clearDisplay()
         }
         var result = isNewValue
-        val displayLength: Int = display.length
-        if (BS == c) {
-            result = if (displayLength > 1) {
-                display.delete(displayLength - 1, displayLength)
-                false
+        with(display) {
+
+            if (BS == c) {
+                result = if (isNotEmpty()) {
+                    delete(length - 1, length)
+                    false
+                } else {
+                    clearDisplay()
+                    append(ZERO_CHAR)
+                    true
+                }
             } else {
-                clearDisplay()
-                display.append(ZERO_CHAR)
-                true
-            }
-        } else {
 
-            val indexDS: Int = display.indexOf(DS)
+                val indexDS: Int = indexOf(DS)
 
-            if (indexDS < 0 || (c != DS && displayLength - indexDS < 3)) {
-                if (displayLength == 1 && display[0] == ZERO_CHAR && c != DS) {
-                    display.delete(0, 1)
+                if (indexDS < 0 || (c != DS && length - indexDS < 3)) {
+                    if (length == 1 && this[0] == ZERO_CHAR && c != DS) {
+                        delete(0, 1)
+                    }
+                    if (isEmpty() && c == DS) {
+                        append(ZERO_CHAR)
+                    }
+                    append(c)
+                    result = false
                 }
-                if(displayLength == 0 && c == DS){
-                    display.append(ZERO_CHAR)
-                }
-                display.append(c)
-                result = false
             }
         }
         return result
@@ -50,23 +54,21 @@ class MainDisplay(currencyIndex: Int, currencies: ArrayList<Currency>) :
     }
 
     fun writeDisplayValueToCurrency() {
-        getMainDisplayCurrency().setValue(display)
+        mainDisplayCurrency.setValue(display)
 
-        if(getMainDisplayCurrency().isInfinity()){
+        if(mainDisplayCurrency.isInfinity()){
             writeCurrencyValueToDisplay()
         }
     }
 
     fun createExpression(operation: Char, yRegistry: Float) {
-        expression.setLength(0)
-        if (!getMainDisplayCurrency().isInfinity() && operation != EVAL) {
-            expression.append(floatToString(yRegistry))
-            expression.append(' ')
-            expression.append(operation)
+        with(expression) {
+            setLength(0)
+            if (!mainDisplayCurrency.isInfinity() && operation != EVAL) {
+                append(floatToString(yRegistry))
+                append(' ')
+                append(operation)
+            }
         }
-    }
-
-    fun getMainDisplayCurrency() : Currency {
-        return currencies[currencyIndex]
     }
 }

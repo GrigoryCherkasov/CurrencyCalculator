@@ -1,76 +1,54 @@
 package ws.grigory.currencycalculator.settings
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.AutoCompleteTextView
+import android.view.LayoutInflater
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.DialogFragment
-import ws.grigory.currencycalculator.Constants.ADD
-import ws.grigory.currencycalculator.Constants.truncate
 import ws.grigory.currencycalculator.Currency
 import ws.grigory.currencycalculator.R
 import ws.grigory.currencycalculator.RateLoader
+import ws.grigory.currencycalculator.databinding.CurrencyNameDialogBinding
 
 class CurrencyNameDialog(
-    private var currencyNameSC: CharSequence,
-    private var currenciesList: List<RateLoader.CurrencyData>,
-    private var ratesList: MutableMap<String, Float>,
-    private var currencies: MutableList<Currency>,
-    private var currencyAdapter: CurrencyAdapter): DialogFragment() {
+    private val currencyNameSC: CharSequence,
+    private val currenciesList: List<RateLoader.CurrencyData>,
+    private val currencies: MutableList<Currency>,
+    private val ratesList: MutableMap<String, Float>,
+) : DialogFragment() {
 
-    private lateinit var currencyName: AutoCompleteTextView
+    private lateinit var binding: CurrencyNameDialogBinding
 
-    @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle(resources.getString(R.string.currency))
+        val context = requireContext()
+        binding = CurrencyNameDialogBinding.inflate(LayoutInflater.from(context))
 
-        val inflaterView = requireActivity().layoutInflater.inflate(
-            R.layout.currency_name_dialog, null)
+        with(binding.currencyName) {
+            setText(currencyNameSC)
+            setAdapter(CurrencyListAdapter(requireContext(), currenciesList))
 
-        currencyName = inflaterView.findViewById(R.id.currencyName)
-        currencyName.setText(currencyNameSC)
-        currencyName.setAdapter(CurrencyListAdapter(requireContext(), currenciesList))
-
-        currencyName.setOnItemClickListener { parent, _, position, _ ->
-            currencyName.setText((parent.adapter.getItem(position) as RateLoader.CurrencyData).code)
+            setOnItemClickListener { parent, _, position, _ ->
+                setText((parent.adapter.getItem(position) as RateLoader.CurrencyData).code)
+            }
         }
-
-        builder.setView(inflaterView)
-            .setPositiveButton(R.string.save) { _, _ -> onDialogName(this) }
-            .setNegativeButton(R.string.cancel) { _, _ -> }
-        return builder.create()
+        return AlertDialog.Builder(context).apply {
+            setTitle(R.string.currency)
+            setView(binding.root)
+            setPositiveButton(R.string.save) { _, _ -> onDialogName() }
+            setNegativeButton(R.string.cancel) { _, _ -> }
+        }.create()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun onDialogName(dialog: CurrencyNameDialog) {
-        val name: CharSequence = dialog.currencyName.text
-        val tag = dialog.tag
-        if (tag != null) {
-            if (name.isEmpty()) {
-                Toast.makeText(
-                    context,
-                    resources.getString(R.string.incorrect_base_currency_name),
-                    LENGTH_SHORT
-                ).show()
-            } else {
-                ratesList.clear()
-
-                if (tag == ADD) {
-                    currencies.add(Currency(truncate(name).toString()))
-                    currencyAdapter.notifyItemInserted(0)
-                } else {
-                    val currency: Currency = currencies[0]
-                    currency.name = truncate(name).toString()
-                    currencies.clear()
-                    currencies.add(currency)
-                    currencyAdapter.notifyDataSetChanged()
-                }
-                currencyAdapter.setAddVisibility()
-            }
+    private fun onDialogName() {
+        val name = binding.currencyName.text
+        if (name.isEmpty()) {
+            Toast.makeText(requireContext(), R.string.incorrect_base_currency_name, LENGTH_SHORT)
+                .show()
+        } else {
+            ratesList.clear()
+            currencies.add(Currency("$name"))
         }
     }
 }

@@ -13,7 +13,7 @@ import ws.grigory.currencycalculator.Constants.ZERO_CHAR
 import ws.grigory.currencycalculator.Currency
 import ws.grigory.currencycalculator.WidgetParameters
 
-class Calculator (context: Context) {
+class Calculator(context: Context) {
     private val operations = charArrayOf(PLUS, MINUS, MUL, DIV, EVAL).toHashSet()
     private var yRegistry: Float = 0F
     private var operation: Char = EVAL
@@ -23,19 +23,19 @@ class Calculator (context: Context) {
     private lateinit var currencies: ArrayList<Currency>
     var invalidated = true
 
-    init{
+    init {
         loadCurrencies(context)
         mainDisplay.processDisplayChar(true, ZERO_CHAR)
         invalidated = true
     }
 
-    fun setData(data: Char , context: Context) {
+    fun setData(data: Char, context: Context) {
         invalidated = false
-        val currency: Currency  = mainDisplay.getMainDisplayCurrency()
+        val currency: Currency = mainDisplay.mainDisplayCurrency
         if (C == data) {
             clear()
         } else {
-            if (!mainDisplay.getMainDisplayCurrency().isInfinity()) {
+            if (!mainDisplay.mainDisplayCurrency.isInfinity()) {
                 if (SHIFT == data) {
                     shift(context)
                 } else {
@@ -69,20 +69,21 @@ class Calculator (context: Context) {
     }
 
     private fun calculateCurrencies(value: Float) {
-        mainDisplay.getMainDisplayCurrency().value = value
-        val baseValue: Float = mainDisplay.getMainDisplayCurrency().getBaseValue()
-        displays.filter { display: Display -> display !is  MainDisplay}.
-            forEach { display ->  display.calculateCurrencyValueToDisplay(baseValue)}
+        mainDisplay.mainDisplayCurrency.value = value
+        val baseValue: Float = mainDisplay.mainDisplayCurrency.getBaseValue()
+        displays.filter { display: Display -> display !is MainDisplay }
+            .forEach { display -> display.calculateCurrencyValueToDisplay(baseValue) }
     }
 
     private fun shift(context: Context) {
-        displays.forEach {display -> display.shift() }
+        displays.forEach { display -> display.shift() }
         clearRegistries()
         WidgetParameters.getWidgetParameters(context).saveParameters(
-            context, currencies, displays[0].currencyIndex)
+            context, currencies, displays[0].currencyIndex
+        )
     }
 
-    fun reset(context: Context){
+    fun reset(context: Context) {
         loadCurrencies(context)
         displays.forEachIndexed { index, display ->
             run {
@@ -95,7 +96,7 @@ class Calculator (context: Context) {
 
     private fun clear() {
         clearRegistries()
-        displays.forEach { display ->  display.zeroingDisplay()}
+        displays.forEach { display -> display.zeroingDisplay() }
 
         mainDisplay.processDisplayChar(true, ZERO_CHAR)
         mainDisplay.createExpression(operation, yRegistry)
@@ -118,19 +119,23 @@ class Calculator (context: Context) {
 
         currencies = widgetParameters.currencies.clone() as ArrayList<Currency>
 
-        var currencyIndex: Int = widgetParameters.mainDisplayCurrencyIndex
+        mainDisplay = MainDisplay(widgetParameters.mainDisplayCurrencyIndex, currencies)
 
-        mainDisplay = MainDisplay(currencyIndex, currencies)
-        currencyIndex = if (currencyIndex == 0) currencies.size - 1 else --currencyIndex
-        val display1 = Display(currencyIndex, currencies)
-        currencyIndex = if (currencyIndex == 0) currencies.size - 1 else --currencyIndex
-        val display2 = Display(currencyIndex, currencies)
-
-        displays = arrayOf(mainDisplay, display1, display2)
+        displays = arrayOf(mainDisplay,
+            Display(getCurrencyIndex(1, widgetParameters.mainDisplayCurrencyIndex), currencies),
+            Display(getCurrencyIndex(2, widgetParameters.mainDisplayCurrencyIndex), currencies))
     }
 
-    fun invalidate(){
+    fun invalidate() {
         clearRegistries()
         mainDisplay.createExpression(EVAL, 0F)
+    }
+
+    private fun getCurrencyIndex(order: Int, currencyIndex: Int) : Int {
+        return if(currencies.size > order) {
+            if (currencyIndex - order < 0) currencies.size - order else currencyIndex - order
+        } else {
+            -1
+        }
     }
 }

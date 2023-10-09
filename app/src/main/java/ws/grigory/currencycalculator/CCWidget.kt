@@ -1,11 +1,6 @@
 package ws.grigory.currencycalculator
 
-
 import android.app.PendingIntent
-import android.app.job.JobInfo
-import android.app.job.JobParameters
-import android.app.job.JobScheduler
-import android.app.job.JobService
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -15,7 +10,6 @@ import android.graphics.Color
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.annotation.IdRes
-import androidx.work.Configuration
 import ws.grigory.currencycalculator.Constants.BS
 import ws.grigory.currencycalculator.Constants.BUTTON_CODE
 import ws.grigory.currencycalculator.Constants.C
@@ -34,36 +28,11 @@ import ws.grigory.currencycalculator.calculator.Display
 import ws.grigory.currencycalculator.calculator.MainDisplay
 import ws.grigory.currencycalculator.settings.SettingsActivity
 
-private const val JOB_ID = 1
-private const val LATENCY = 5000L
-
 open class CCWidget : AppWidgetProvider() {
 
     companion object {
-        val CURRENCIES_INTENT: Intent = Intent(CURRENCIES)
-        val INVALIDATE_INTENT = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        val CURRENCIES_INTENT: Intent = Intent(CURRENCIES).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         var CALCULATOR: Calculator? = null
-        var INVALIDATE_JOB_INFO: JobInfo? = null
-
-        init {
-            CURRENCIES_INTENT.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            INVALIDATE_INTENT.putExtra(INVALIDATE, true)
-        }
-    }
-
-    class InvalidateJobService : JobService() {
-        init {
-            Configuration.Builder().setJobSchedulerJobIdRange(0, 1000).build()
-        }
-
-        override fun onStartJob(params: JobParameters): Boolean {
-            sendBroadcast(INVALIDATE_INTENT)
-            return true
-        }
-
-        override fun onStopJob(params: JobParameters): Boolean {
-            return true
-        }
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -74,44 +43,34 @@ open class CCWidget : AppWidgetProvider() {
             CALCULATOR = Calculator(context)
         }
 
-        if (INVALIDATE_JOB_INFO == null) {
-            INVALIDATE_JOB_INFO = JobInfo.Builder(
-                JOB_ID,
-                ComponentName(context, InvalidateJobService::class.java)
-            )
-                .setOverrideDeadline(LATENCY)
-                .setMinimumLatency(LATENCY)
-                .build()
-        }
-
-        val isButton: Boolean = intent.hasExtra(BUTTON_CODE)
         val isNewCurrency: Boolean = intent.hasExtra(CURRENCIES)
         val isInvalidate: Boolean = intent.hasExtra(INVALIDATE)
-        val isRepaint: Boolean = intent.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
 
-        if (isButton || isNewCurrency || isInvalidate) {
+        if (intent.hasExtra(BUTTON_CODE) || isNewCurrency || isInvalidate) {
             val appWidgetManager = AppWidgetManager.getInstance(context)
             val componentName = ComponentName(context, this::class.java)
             val classCode = intent.getIntExtra(CLASS_CODE, 0)
-            if (isNewCurrency) {
-                CALCULATOR!!.reset(context)
-            } else if (isInvalidate) {
-                CALCULATOR!!.invalidate()
-            } else if (appWidgetManager.getAppWidgetIds(componentName).isNotEmpty()
-                && this::class.java.simpleName.hashCode() == classCode
-            ) {
-                val button = intent.getCharExtra(BUTTON_CODE, EVAL)
+            when {
+                intent.hasExtra(CURRENCIES) -> {
+                    CALCULATOR!!.reset(context)
 
-                CALCULATOR!!.setData(button, context)
+                }
 
-                if (button == EVAL || button == C) {
-                    stopInvalidate(context)
-                } else {
-                    startInvalidate(context)
+                isInvalidate -> {
+                    CALCULATOR!!.invalidate()
+                }
+
+                appWidgetManager.getAppWidgetIds(componentName).isNotEmpty()
+                        && this::class.java.simpleName.hashCode() == classCode -> {
+                    val button = intent.getCharExtra(BUTTON_CODE, EVAL)
+                    CALCULATOR!!.setData(button, context)
+                    if (!(button == EVAL || button == C)) {
+                        (context.applicationContext as CalculatorApplication).launchEvalTimeout()
+                    }
                 }
             }
             showAllWidgetsDisplay(context, appWidgetManager, CALCULATOR!!.invalidated)
-        } else if (isRepaint) {
+        } else if (intent.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)) {
             initAllWidgets(context, AppWidgetManager.getInstance(context))
         }
     }
@@ -141,14 +100,14 @@ open class CCWidget : AppWidgetProvider() {
 
     private fun showWidgetDisplay(
         context: Context, appWidgetManager: AppWidgetManager,
-        widgetClass: Class<out Any>, layout_id: Int, invalidated: Boolean
+        widgetClass: Class<out Any>, layoutId: Int, invalidated: Boolean
     ) {
 
         val componentName = ComponentName(context, widgetClass)
 
         val idWidgets: IntArray = appWidgetManager.getAppWidgetIds(componentName)
         if (idWidgets.isNotEmpty() && widgetClass == this.javaClass) {
-            val widget = RemoteViews(componentName.packageName, layout_id)
+            val widget = RemoteViews(componentName.packageName, layoutId)
             setTextValue(widget, invalidated)
             appWidgetManager.updateAppWidget(idWidgets, widget)
         }
@@ -181,15 +140,14 @@ open class CCWidget : AppWidgetProvider() {
 
     private fun initWidget(
         context: Context, appWidgetManager: AppWidgetManager,
-        widgetClass: Class<out Any>, layout_id: Int, invalidated: Boolean
+        widgetClass: Class<out Any>, layoutId: Int, invalidated: Boolean
     ) {
         val componentName = ComponentName(context, widgetClass)
 
         val idWidgets: IntArray = appWidgetManager.getAppWidgetIds(componentName)
         if (idWidgets.isNotEmpty()) {
-println("init $widgetClass")
             val classCode: Int = widgetClass.simpleName.hashCode()
-            val widget = RemoteViews(componentName.packageName, layout_id)
+            val widget = RemoteViews(componentName.packageName, layoutId)
 
             setOnClick(context, widget)
             setOnClick(context, widget, R.id.shift, SHIFT, classCode)
@@ -254,29 +212,18 @@ println("init $widgetClass")
 
     private fun setTextValue(widget: RemoteViews, invalidated: Boolean) {
         val displays: Array<Display> = CALCULATOR!!.getDisplays()
-        widget.setTextViewText(R.id.currency2, displays[2].getCurrencyName())
-        widget.setTextViewText(R.id.value2, displays[2].getValue())
+        widget.setTextViewText(R.id.currency2, displays[2].currencyName)
+        widget.setTextViewText(R.id.value2, displays[2].value)
 
-        widget.setTextViewText(R.id.currency1, displays[1].getCurrencyName())
-        widget.setTextViewText(R.id.value1, displays[1].getValue())
+        widget.setTextViewText(R.id.currency1, displays[1].currencyName)
+        widget.setTextViewText(R.id.value1, displays[1].value)
 
-        widget.setTextViewText(R.id.currency0, displays[0].getCurrencyName())
-        widget.setTextViewText(R.id.value0, displays[0].getValue())
+        widget.setTextViewText(R.id.currency0, displays[0].currencyName)
+        widget.setTextViewText(R.id.value0, displays[0].value)
         widget.setTextColor(R.id.value0, if (invalidated) Color.YELLOW else Color.WHITE)
         widget.setTextViewText(
             R.id.expression, (
                     displays[0] as MainDisplay).expression.toString()
         )
-    }
-
-    private fun startInvalidate(context: Context) {
-        stopInvalidate(context).schedule(INVALIDATE_JOB_INFO!!)
-    }
-
-    private fun stopInvalidate(context: Context): JobScheduler {
-        val invalidateJobScheduler =
-            context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        invalidateJobScheduler.cancel(JOB_ID)
-        return invalidateJobScheduler
     }
 }

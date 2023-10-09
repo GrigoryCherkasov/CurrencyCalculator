@@ -1,15 +1,27 @@
 package ws.grigory.currencycalculator.settings
 
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ws.grigory.currencycalculator.R
+import ws.grigory.currencycalculator.databinding.CurrencyItemBinding
 
-class CurrencyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-    val currencyName: TextView = itemView.findViewById(R.id.currencyName)
-    val currencyRate: TextView = itemView.findViewById(R.id.currencyRate)
-    val currencyCount: TextView = itemView.findViewById(R.id.currencyCount)
-    val currencyEdit: ImageView = itemView.findViewById(R.id.currencyEdit)
-    val currencyDelete: ImageView = itemView.findViewById(R.id.currencyDelete)
+class CurrencyViewHolder(binding: CurrencyItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+    companion object {
+        fun from(parent: ViewGroup): CurrencyViewHolder {
+            return CurrencyViewHolder(
+                CurrencyItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+        }
+    }
+
+    val currencyName = binding.currencyName
+    val currencyRate = binding.currencyRate
+    val currencyCount = binding.currencyCount
+    val currencyEdit = binding.currencyEdit
+    val currencyDelete = binding.currencyDelete
 }
