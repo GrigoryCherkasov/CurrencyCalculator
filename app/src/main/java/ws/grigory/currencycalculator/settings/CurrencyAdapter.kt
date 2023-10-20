@@ -4,6 +4,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ws.grigory.currencycalculator.Constants.EMPTY
 import ws.grigory.currencycalculator.Constants.floatToCharSequence
 import ws.grigory.currencycalculator.Currency
 
@@ -42,6 +43,7 @@ class CurrencyAdapter(
                     if (adapterPosition == 0) {
                         currencies.clear()
                         currencies.trimToSize()
+                        currencies.add(Currency(EMPTY))
                     } else {
                         currencies.removeAt(adapterPosition)
                     }
@@ -55,6 +57,6 @@ class CurrencyAdapter(
     }
 
     override fun getItemCount(): Int {
-        return currencies.size
+        return if(currencies[0].isUndefined()) 0 else  currencies.size
     }
 }

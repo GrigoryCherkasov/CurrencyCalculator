@@ -121,9 +121,11 @@ class Calculator(context: Context) {
 
         mainDisplay = MainDisplay(widgetParameters.mainDisplayCurrencyIndex, currencies)
 
-        displays = arrayOf(mainDisplay,
+        displays = arrayOf(
+            mainDisplay,
             Display(getCurrencyIndex(1, widgetParameters.mainDisplayCurrencyIndex), currencies),
-            Display(getCurrencyIndex(2, widgetParameters.mainDisplayCurrencyIndex), currencies))
+            Display(getCurrencyIndex(2, widgetParameters.mainDisplayCurrencyIndex), currencies)
+        )
     }
 
     fun invalidate() {
@@ -131,11 +133,12 @@ class Calculator(context: Context) {
         mainDisplay.createExpression(EVAL, 0F)
     }
 
-    private fun getCurrencyIndex(order: Int, currencyIndex: Int) : Int {
-        return if(currencies.size > order) {
-            if (currencyIndex - order < 0) currencies.size - order else currencyIndex - order
-        } else {
+    private fun getCurrencyIndex(order: Int, currencyIndex: Int): Int {
+        return if (currencies.size > order)
+            if (currencyIndex == 0) order
+            else if (currencies.size == order + currencyIndex) 0
+            else currencies.size - currencyIndex
+        else
             -1
-        }
     }
 }

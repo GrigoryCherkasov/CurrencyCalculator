@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CalculatorPad">
+
+    <LinearLayout style="@style/DisplayPad">
+
+        <LinearLayout style="@style/DisplayRow">
+
+            <ImageView
+                android:id="@+id/currency2"
+                style="@style/DisplayCellCurrency"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/value2"
+                style="@style/DisplayCellValue"
+                tools:ignore="ContentDescription, ImageContrastCheck" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/DisplayRowWithLine">
+
+            <ImageView
+                android:id="@+id/currency1"
+                style="@style/DisplayCellCurrency"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/value1"
+                style="@style/DisplayCellValue"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/expression"
+            style="@style/DisplayRowExpression"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout style="@style/DisplayRowWithLine">
+
+            <ImageView
+                android:id="@+id/currency0"
+                style="@style/DisplayCellCurrency"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/value0"
+                style="@style/DisplayCellValue"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout style="@style/ButtonPad">
+
+        <LinearLayout style="@style/ButtonRowPad">
+
+            <include layout="@layout/row_top" />
+
+            <include layout="@layout/row_middle" />
+
+            <include layout="@layout/row_middle" />
+
+            <include layout="@layout/row_middle" />
+
+            <include layout="@layout/row_bottom" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/ButtonRowPad">
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <ImageView
+                    android:id="@+id/setCurrency"
+                    style="@style/ButtonText"
+                    android:src="@drawable/set"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/shift"
+                    style="@style/ButtonText"
+                    android:src="@drawable/shift"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/bs"
+                    style="@style/ButtonText"
+                    android:padding="4dp"
+                    android:src="@drawable/bs"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/c"
+                    style="@style/ButtonText"
+                    android:src="@drawable/c"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <ImageView
+                    android:id="@+id/div"
+                    style="@style/ButtonText"
+                    android:src="@drawable/div"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d1"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d1"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d2"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d2"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d3"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d3"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <ImageView
+                    android:id="@+id/mul"
+                    style="@style/ButtonText"
+                    android:src="@drawable/mul"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d4"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d4"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d5"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d5"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d6"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d6"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <ImageView
+                    android:id="@+id/minus"
+                    style="@style/ButtonText"
+                    android:src="@drawable/minus"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d7"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d7"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d8"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d8"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d9"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d9"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ButtonRow">
+
+                <ImageView
+                    android:id="@+id/plus"
+                    style="@style/ButtonText"
+                    android:src="@drawable/plus"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/d0"
+                    style="@style/ButtonText"
+                    android:src="@drawable/d0"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/ds"
+                    style="@style/ButtonText"
+                    android:src="@drawable/ds"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/eval"
+                    style="@style/ButtonText"
+                    android:src="@drawable/eval"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

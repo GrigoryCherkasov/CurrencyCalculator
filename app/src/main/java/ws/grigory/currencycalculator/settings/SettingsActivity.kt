@@ -53,7 +53,7 @@ class SettingsActivity : AppCompatActivity() {
 
         addButton.visibility = if (currencies.size >= MAX_DISPLAY_CURRENCIES) INVISIBLE else VISIBLE
         addButton.setOnClickListener {
-            if (currencies.isEmpty()) {
+            if (currencies[0].isUndefined()) {
                 currencyEditor.addBaseCurrency()
             } else if (currencies.size < MAX_DISPLAY_CURRENCIES) {
                 currencyEditor.changeCurrency(EMPTY, ONE, EMPTY, ADD)

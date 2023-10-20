@@ -20,7 +20,7 @@ data class Currency(var name: String, var rate: Float, var count: Float) : Parce
     }
 
     fun setValue(strValue: StringBuilder) {
-        this.value = checkInfinity(Constants.DF.parse(strValue.toString())!!.toFloat())
+        this.value = if(strValue.isEmpty()) 0f else checkInfinity(Constants.DF.parse(strValue.toString())!!.toFloat())
     }
 
     fun calculateValue(baseValue: Float) {
@@ -37,6 +37,10 @@ data class Currency(var name: String, var rate: Float, var count: Float) : Parce
 
     fun mul(value: Float) {
         this.value = checkInfinity(value * this.value)
+    }
+
+    fun isUndefined(): Boolean {
+        return name.isEmpty()
     }
 
     fun div(value: Float) {

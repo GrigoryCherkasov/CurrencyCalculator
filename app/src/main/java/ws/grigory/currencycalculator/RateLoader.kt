@@ -73,15 +73,18 @@ class RateLoader {
                         object : TypeToken<Map<String, Float>>() {}.type
                     )
                         .mapKeys { (key, _) -> key.substring(3) })
+                    if(resultMap.containsKey(baseCode)) {
+                        val rateUSD: Float = if (USD == baseCode) 1f else resultMap[baseCode]!!
+                        resultMap.remove(baseCode)
+                        resultMap = resultMap
+                            .mapValues { (_, value) -> value / rateUSD }
+                            .toMutableMap()
 
-                    val rateUSD: Float = if (USD == baseCode) 1f else resultMap[baseCode]!!
-                    resultMap.remove(baseCode)
-                    resultMap = resultMap
-                        .mapValues { (_, value) -> value / rateUSD }
-                        .toMutableMap()
-
-                    if (USD != baseCode) {
-                        resultMap[USD] = 1 / rateUSD
+                        if (USD != baseCode) {
+                            resultMap[USD] = 1 / rateUSD
+                        }
+                    } else {
+                        resultMap.clear()
                     }
                 }
         }

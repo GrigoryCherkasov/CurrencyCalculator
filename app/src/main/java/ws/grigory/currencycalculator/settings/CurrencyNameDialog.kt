@@ -48,7 +48,7 @@ class CurrencyNameDialog(
                 .show()
         } else {
             ratesList.clear()
-            currencies.add(Currency("$name"))
+            currencies[0] = Currency("$name")
         }
     }
 }

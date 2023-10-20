@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ButtonRow">
+
+    <ImageView
+        style="@style/ButtonImageBlue"
+        tools:ignore="ContentDescription,VisualLintBounds" />
+
+    <ImageView
+        style="@style/ButtonImageDark"
+        tools:ignore="ContentDescription,VisualLintBounds" />
+
+    <ImageView
+        style="@style/ButtonImageDark"
+        tools:ignore="ContentDescription,VisualLintBounds" />
+
+    <ImageView
+        style="@style/ButtonImageOrange"
+        tools:ignore="ContentDescription,VisualLintBounds" />
+</LinearLayout>

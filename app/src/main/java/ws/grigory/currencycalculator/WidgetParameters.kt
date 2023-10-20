@@ -2,6 +2,7 @@ package ws.grigory.currencycalculator
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import ws.grigory.currencycalculator.Constants.EMPTY
 import ws.grigory.currencycalculator.Constants.MAX_DISPLAY_CURRENCIES
 import java.text.DecimalFormat
@@ -55,7 +56,7 @@ object Constants {
     val DF: DecimalFormat by lazy { DecimalFormat("#.##") }
     @JvmStatic
     val DS = DF.decimalFormatSymbols.decimalSeparator
-
+    val EVAL_COLOR = Color.parseColor("#fccb0c")
     @JvmStatic
     fun truncate(text: CharSequence): CharSequence {
         return when {

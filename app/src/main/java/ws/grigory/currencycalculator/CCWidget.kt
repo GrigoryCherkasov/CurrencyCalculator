@@ -6,7 +6,10 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.annotation.IdRes
@@ -18,6 +21,7 @@ import ws.grigory.currencycalculator.Constants.CURRENCIES
 import ws.grigory.currencycalculator.Constants.DIV
 import ws.grigory.currencycalculator.Constants.DS
 import ws.grigory.currencycalculator.Constants.EVAL
+import ws.grigory.currencycalculator.Constants.EVAL_COLOR
 import ws.grigory.currencycalculator.Constants.INVALIDATE
 import ws.grigory.currencycalculator.Constants.MINUS
 import ws.grigory.currencycalculator.Constants.MUL
@@ -69,85 +73,50 @@ open class CCWidget : AppWidgetProvider() {
                     }
                 }
             }
-            showAllWidgetsDisplay(context, appWidgetManager, CALCULATOR!!.invalidated)
+
+            showWidgetDisplay(
+                context, appWidgetManager, CALCULATOR!!.invalidated
+            )
+
         } else if (intent.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)) {
-            initAllWidgets(context, AppWidgetManager.getInstance(context))
+            initWidget(
+                context,
+                AppWidgetManager.getInstance(context),
+                CALCULATOR!!.invalidated
+            )
         }
     }
 
-    override fun onDisabled(context: Context){
-        initAllWidgets(context, AppWidgetManager.getInstance(context))
+    override fun onDisabled(context: Context) {
+        initWidget(
+            context,
+            AppWidgetManager.getInstance(context),
+            CALCULATOR!!.invalidated
+        )
     }
 
-    private fun showAllWidgetsDisplay(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        invalidated: Boolean
-    ) {
-        showWidgetDisplay(
-            context, appWidgetManager, CCWidgetSmall::class.java,
-            R.layout.ccwidget_small, invalidated
-        )
-        showWidgetDisplay(
-            context, appWidgetManager, CCWidgetMedium::class.java,
-            R.layout.ccwidget_medium, invalidated
-        )
-        showWidgetDisplay(
-            context, appWidgetManager, CCWidgetLarge::class.java,
-            R.layout.ccwidget_large, invalidated
-        )
-    }
 
     private fun showWidgetDisplay(
-        context: Context, appWidgetManager: AppWidgetManager,
-        widgetClass: Class<out Any>, layoutId: Int, invalidated: Boolean
+        context: Context, appWidgetManager: AppWidgetManager, invalidated: Boolean
     ) {
-
-        val componentName = ComponentName(context, widgetClass)
-
+        val componentName = ComponentName(context, CCWidget::class.java)
         val idWidgets: IntArray = appWidgetManager.getAppWidgetIds(componentName)
-        if (idWidgets.isNotEmpty() && widgetClass == this.javaClass) {
-            val widget = RemoteViews(componentName.packageName, layoutId)
+        if (idWidgets.isNotEmpty()) {
+            val widget = RemoteViews(componentName.packageName, R.layout.ccwidget)
             setTextValue(widget, invalidated)
             appWidgetManager.updateAppWidget(idWidgets, widget)
         }
     }
 
-    private fun initAllWidgets(context: Context, appWidgetManager: AppWidgetManager) {
-
-        initWidget(
-            context,
-            appWidgetManager,
-            CCWidgetSmall::class.java,
-            R.layout.ccwidget_small,
-            CALCULATOR!!.invalidated
-        )
-        initWidget(
-            context,
-            appWidgetManager,
-            CCWidgetMedium::class.java,
-            R.layout.ccwidget_medium,
-            CALCULATOR!!.invalidated
-        )
-        initWidget(
-            context,
-            appWidgetManager,
-            CCWidgetLarge::class.java,
-            R.layout.ccwidget_large,
-            CALCULATOR!!.invalidated
-        )
-    }
-
     private fun initWidget(
-        context: Context, appWidgetManager: AppWidgetManager,
-        widgetClass: Class<out Any>, layoutId: Int, invalidated: Boolean
+        context: Context, appWidgetManager: AppWidgetManager, invalidated: Boolean
     ) {
-        val componentName = ComponentName(context, widgetClass)
+        val componentName = ComponentName(context, CCWidget::class.java)
 
         val idWidgets: IntArray = appWidgetManager.getAppWidgetIds(componentName)
         if (idWidgets.isNotEmpty()) {
-            val classCode: Int = widgetClass.simpleName.hashCode()
-            val widget = RemoteViews(componentName.packageName, layoutId)
+            val classCode: Int = CCWidget::class.java.simpleName.hashCode()
+            val widget = RemoteViews(componentName.packageName, R.layout.ccwidget)
 
             setOnClick(context, widget)
             setOnClick(context, widget, R.id.shift, SHIFT, classCode)
@@ -178,13 +147,13 @@ open class CCWidget : AppWidgetProvider() {
     private fun setOnClick(context: Context, widget: RemoteViews) {
         CURRENCIES_INTENT.setClass(context, SettingsActivity::class.java)
 
-        val pendingIntent = PendingIntent.getActivity(
-            context, 0,
-            CURRENCIES_INTENT,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        widget.setOnClickPendingIntent(
+            R.id.setCurrency, PendingIntent.getActivity(
+                context, 0,
+                CURRENCIES_INTENT,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
         )
-
-        widget.setOnClickPendingIntent(R.id.setCurrency, pendingIntent)
     }
 
     private fun setOnClick(
@@ -212,18 +181,46 @@ open class CCWidget : AppWidgetProvider() {
 
     private fun setTextValue(widget: RemoteViews, invalidated: Boolean) {
         val displays: Array<Display> = CALCULATOR!!.getDisplays()
-        widget.setTextViewText(R.id.currency2, displays[2].currencyName)
-        widget.setTextViewText(R.id.value2, displays[2].value)
-
-        widget.setTextViewText(R.id.currency1, displays[1].currencyName)
-        widget.setTextViewText(R.id.value1, displays[1].value)
-
-        widget.setTextViewText(R.id.currency0, displays[0].currencyName)
-        widget.setTextViewText(R.id.value0, displays[0].value)
-        widget.setTextColor(R.id.value0, if (invalidated) Color.YELLOW else Color.WHITE)
-        widget.setTextViewText(
-            R.id.expression, (
-                    displays[0] as MainDisplay).expression.toString()
+        widget.setImageViewBitmap(
+            R.id.currency2,
+            getImageForString(displays[2].currencyName, Color.WHITE)
         )
+        widget.setImageViewBitmap(R.id.value2, getImageForString(displays[2].value, Color.WHITE))
+        widget.setImageViewBitmap(
+            R.id.currency1,
+            getImageForString(displays[1].currencyName, Color.WHITE)
+        )
+        widget.setImageViewBitmap(R.id.value1, getImageForString(displays[1].value, Color.WHITE))
+        widget.setImageViewBitmap(
+            R.id.currency0,
+            getImageForString(displays[0].currencyName, Color.WHITE)
+        )
+        widget.setImageViewBitmap(
+            R.id.value0,
+            getImageForString(displays[0].value, if (invalidated) EVAL_COLOR else Color.WHITE)
+        )
+        widget.setImageViewBitmap(
+            R.id.expression,
+            getImageForString((displays[0] as MainDisplay).expression.toString(), Color.WHITE)
+        )
+    }
+
+    private fun getImageForString(string: String, color: Int): Bitmap? {
+        return if (string.isNotEmpty()) {
+            val paint = Paint()
+            paint.isAntiAlias = true
+            paint.textSize = 140f
+            paint.color = color
+            val baseline = -paint.ascent()
+            val image = Bitmap.createBitmap(
+                paint.measureText(string).toInt(),
+                (baseline * 1.2f).toInt(),
+                Bitmap.Config.ARGB_8888
+            )
+            Canvas(image).drawText(string, 0f, baseline, paint)
+            image
+        } else {
+            null
+        }
     }
 }

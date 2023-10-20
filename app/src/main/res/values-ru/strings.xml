@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Калькулятор валют</string>
-    <string name="widget_large">Большой</string>
-    <string name="widget_medium">Средний</string>
-    <string name="widget_small">Малый</string>
 
     <string name="ds">,</string>
 

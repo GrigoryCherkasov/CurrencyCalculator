@@ -21,10 +21,12 @@ class MainDisplay(currencyIndex: Int, currencies: ArrayList<Currency>) :
         with(display) {
 
             if (BS == c) {
-                result = if (isNotEmpty()) {
+                if (isNotEmpty()) {
                     delete(length - 1, length)
+                }
+                result = if (isNotEmpty())
                     false
-                } else {
+                else {
                     clearDisplay()
                     append(ZERO_CHAR)
                     true
@@ -56,7 +58,7 @@ class MainDisplay(currencyIndex: Int, currencies: ArrayList<Currency>) :
     fun writeDisplayValueToCurrency() {
         mainDisplayCurrency.setValue(display)
 
-        if(mainDisplayCurrency.isInfinity()){
+        if (mainDisplayCurrency.isInfinity()) {
             writeCurrencyValueToDisplay()
         }
     }
