@@ -1,6 +1,7 @@
 package ws.grigory.currencycalculator.calculator
 
 import android.content.Context
+import ws.grigory.currencycalculator.Constants.BS
 import ws.grigory.currencycalculator.Constants.C
 import ws.grigory.currencycalculator.Constants.DIV
 import ws.grigory.currencycalculator.Constants.EVAL
@@ -32,7 +33,7 @@ class Calculator(context: Context) {
     fun setData(data: Char, context: Context) {
         invalidated = false
         val currency: Currency = mainDisplay.mainDisplayCurrency
-        if (C == data) {
+        if (C == data || (BS == data && (mainDisplay.value.length == 1 || isNewValue))) {
             clear()
         } else {
             if (!mainDisplay.mainDisplayCurrency.isInfinity()) {
