@@ -18,12 +18,6 @@ private const val CURRENCY2_COUNT = "C2C"
 private const val MAIN_DISPLAY_CURRENCY_INDEX = "MDCI"
 
 object Constants {
-    const val CURRENCY_LIST_START = "\"currencies\":"
-    const val CURRENCY_RATES_START = "\"quotes\":"
-    const val URL_CURRENCY_LIST =
-        "http://api.exchangerate.host/list?access_key=da7266d8f63212b30005e07505e20f4b"
-    const val URL_CURRENCY_RATE =
-        "http://api.exchangerate.host/live?access_key=da7266d8f63212b30005e07505e20f4b"
     const val RU_LANGUAGE = "ru"
 
     const val BUTTON_CODE = "BUTTON_CODE"
