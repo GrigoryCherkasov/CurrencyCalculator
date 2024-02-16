@@ -5,7 +5,7 @@
 
     <LinearLayout style="@style/DisplayPad">
 
-        <LinearLayout style="@style/DisplayRow">
+        <LinearLayout style="@style/DisplayTopRow">
 
             <ImageView
                 android:id="@+id/currency2"
@@ -18,7 +18,7 @@
                 tools:ignore="ContentDescription, ImageContrastCheck" />
         </LinearLayout>
 
-        <LinearLayout style="@style/DisplayRowWithLine">
+        <LinearLayout style="@style/DisplayRow">
 
             <ImageView
                 android:id="@+id/currency1"
@@ -36,7 +36,7 @@
             style="@style/DisplayRowExpression"
             tools:ignore="ContentDescription" />
 
-        <LinearLayout style="@style/DisplayRowWithLine">
+        <LinearLayout style="@style/DisplayRow">
 
             <ImageView
                 android:id="@+id/currency0"
@@ -50,7 +50,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout style="@style/ButtonRowPad">
+    <LinearLayout style="@style/ButtonPad">
 
         <LinearLayout style="@style/ButtonRow">
 

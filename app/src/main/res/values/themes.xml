@@ -1,23 +1,60 @@
 <resources>
+    <style name="CalculatorPad">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:background">@drawable/background</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:weightSum">3.5</item>
+    </style>
+
+    <style name="MatchWidthParent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="ButtonPad" parent="MatchWidthParent">
+        <item name="android:layout_weight">2.5</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:weightSum">5</item>
+    </style>
+
+    <style name="DisplayPad" parent="MatchWidthParent">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/display_dark</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:weightSum">3.5</item>
+    </style>
+
+    <style name="RowSize" parent="MatchWidthParent">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="DisplayTopRow" parent="RowSize">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">6</item>
+    </style>
+
+    <style name="DisplayRow" parent="DisplayTopRow">
+        <item name="android:background">@drawable/white_horizontal_line</item>
+    </style>
+
+    <style name="ButtonRow" parent="RowSize">
+        <item name="android:baselineAligned">false</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">4</item>
+    </style>
+
     <style name="CellSize">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="DisplayCellPadding" parent="CellSize">
-        <item name="android:paddingStart">5dp</item>
-        <item name="android:paddingEnd">5dp</item>
-    </style>
-
-    <style name="DisplayCellCurrency" parent="DisplayCellPadding">
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/white_vertical_line</item>
-        <item name="android:scaleType">fitCenter</item>
-    </style>
-
-    <style name="DisplayCellValue" parent="DisplayCellPadding">
-        <item name="android:layout_weight">5</item>
-        <item name="android:scaleType">fitEnd</item>
     </style>
 
     <style name="ButtonText" parent="CellSize">
@@ -49,68 +86,28 @@
         <item name="android:background">@drawable/button_orange</item>
     </style>
 
-    <style name="RowSize">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0dp</item>
+    <style name="DisplayCellPadding" parent="CellSize">
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:paddingEnd">5dp</item>
     </style>
 
-    <style name="RowSizeWeight1" parent="RowSize">
+    <style name="DisplayCellCurrency" parent="DisplayCellPadding">
         <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/white_vertical_line</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 
-    <style name="DisplayRow" parent="RowSizeWeight1">
-        <item name="android:orientation">horizontal</item>
-        <item name="android:weightSum">6</item>
+    <style name="DisplayCellValue" parent="DisplayCellPadding">
+        <item name="android:layout_weight">5</item>
+        <item name="android:scaleType">fitEnd</item>
     </style>
 
-    <style name="DisplayRowWithLine" parent="DisplayRow">
-        <item name="android:background">@drawable/white_horizontal_line</item>
-    </style>
-
-    <style name="DisplayRowExpression" parent="DisplayRowWithLine">
+    <style name="DisplayRowExpression" parent="DisplayRow">
         <item name="android:layout_weight">0.5</item>
         <item name="android:paddingStart">5dp</item>
         <item name="android:paddingEnd">5dp</item>
         <item name="android:scaleType">fitEnd</item>
         <item name="android:background">@drawable/white_horizontal_line</item>
-    </style>
-
-    <style name="ButtonRow" parent="RowSizeWeight1">
-        <item name="android:baselineAligned">false</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:weightSum">4</item>
-    </style>
-
-    <style name="ParentSize">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="ButtonRowPad" parent="RowSize">
-        <item name="android:layout_weight">2.5</item>
-        <item name="android:layout_margin">4dp</item>
-        <item name="android:baselineAligned">false</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:weightSum">5</item>
-    </style>
-
-    <style name="DisplayPad" parent="RowSize">
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/display_dark</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:padding">4dp</item>
-        <item name="android:weightSum">3.5</item>
-    </style>
-
-    <style name="CalculatorPad" parent="ParentSize">
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:background">@drawable/background</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:weightSum">3.5</item>
     </style>
 
     <style name="DialogText">
