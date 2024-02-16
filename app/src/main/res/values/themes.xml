@@ -20,47 +20,38 @@
         <item name="android:scaleType">fitEnd</item>
     </style>
 
-    <style name="ButtonImage" parent="CellSize">
-        <item name="android:layout_margin">4dp</item>
-        <item name="android:layout_weight">1</item>
-    </style>
-
-    <style name="ButtonImageGray" parent="ButtonImage">
-        <item name="android:src">@drawable/button_gray</item>
-    </style>
-
-    <style name="ButtonImageCyan" parent="ButtonImage">
-        <item name="android:src">@drawable/button_cyan</item>
-    </style>
-
-    <style name="ButtonImagePink" parent="ButtonImage">
-        <item name="android:src">@drawable/button_pink</item>
-    </style>
-
-    <style name="ButtonImageBlue" parent="ButtonImage">
-        <item name="android:src">@drawable/button_blue</item>
-    </style>
-
-    <style name="ButtonImageDark" parent="ButtonImage">
-        <item name="android:src">@drawable/button_dark</item>
-    </style>
-
-    <style name="ButtonImageOrange" parent="ButtonImage">
-        <item name="android:src">@drawable/button_orange</item>
-    </style>
-
     <style name="ButtonText" parent="CellSize">
-        <item name="android:layout_margin">6dp</item>
+        <item name="android:layout_margin">3dp</item>
         <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ButtonImageGray" parent="ButtonText">
+        <item name="android:background">@drawable/button_gray</item>
+    </style>
+
+    <style name="ButtonImageCyan" parent="ButtonText">
+        <item name="android:background">@drawable/button_cyan</item>
+    </style>
+
+    <style name="ButtonImagePink" parent="ButtonText">
+        <item name="android:background">@drawable/button_pink</item>
+    </style>
+
+    <style name="ButtonImageBlue" parent="ButtonText">
+        <item name="android:background">@drawable/button_blue</item>
+    </style>
+
+    <style name="ButtonImageDark" parent="ButtonText">
+        <item name="android:background">@drawable/button_dark</item>
+    </style>
+
+    <style name="ButtonImageOrange" parent="ButtonText">
+        <item name="android:background">@drawable/button_orange</item>
     </style>
 
     <style name="RowSize">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
-    </style>
-
-    <style name="ButtonPad" parent="RowSize">
-        <item name="android:layout_weight">2.5</item>
     </style>
 
     <style name="RowSizeWeight1" parent="RowSize">
@@ -95,7 +86,8 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="ButtonRowPad" parent="ParentSize">
+    <style name="ButtonRowPad" parent="RowSize">
+        <item name="android:layout_weight">2.5</item>
         <item name="android:layout_margin">4dp</item>
         <item name="android:baselineAligned">false</item>
         <item name="android:orientation">vertical</item>
