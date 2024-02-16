@@ -144,8 +144,7 @@
 
             <ImageView
                 android:id="@+id/d7"
-                style="@style/ButtonText"
-                android:background="@drawable/button_dark"
+                style="@style/ButtonImageDark"
                 android:src="@drawable/d7"
                 tools:ignore="ContentDescription" />
 
