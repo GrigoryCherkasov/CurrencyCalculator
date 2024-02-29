@@ -150,6 +150,7 @@ open class CCWidget : AppWidgetProvider() {
         widget.setOnClickPendingIntent(
             R.id.setCurrency, PendingIntent.getActivity(
                 context, 0,
+
                 CURRENCIES_INTENT,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
@@ -166,7 +167,7 @@ open class CCWidget : AppWidgetProvider() {
 
         val flag: Int =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             } else {
                 PendingIntent.FLAG_UPDATE_CURRENT
             }
